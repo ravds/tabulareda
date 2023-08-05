@@ -10,7 +10,7 @@ def identify_features(df):
     df (dataframe): the dataframe to analyze
 
     Returns:
-    dict: a dictionary of constant, numerical, and categorical features 
+    dict: a dictionary of constant, numerical, and categorical features
     """
     # Identify constant, numerical, and categorical features
     constant_features = [col for col in df.columns if df[col].nunique() <= 1]
@@ -38,7 +38,7 @@ def condensed_format(num, decimals=1):
         magnitude += 1
         num /= 1000.0
     return "{:.{}f}{}".format(num, decimals, ['', 'k', 'M', 'B', 'T'][magnitude])
-  
+
 def check_all_types(df):
     """
     Analyzes the types of values present in each column of the given DataFrame.
@@ -184,7 +184,7 @@ def plot_duplicates(duplicates_df):
 
 def duplicates(df, unique_identifier_column, return_info=False):
     """
-    Compute and plot the number and percentage of duplicate entries for each unique identifier in a dataframe 
+    Compute and plot the number and percentage of duplicate entries for each unique identifier in a dataframe
 
     Parameters:
     df (pandas.DataFrame): The DataFrame to analyze.
@@ -443,4 +443,11 @@ def plot_outliers(df, numerical_features, z_threshold=7.13, precision=2):
     # Show the plot
     fig.show()
 
-
+def outliers(df, numerical_features, z_threshold=7.13, return_info=False):
+    """
+    Calculate and return the formatted counts of outliers.
+    """
+    outlier_counts = outliers_by_zscore(df, numerical_features, z_threshold)
+    plot_outliers(df, numerical_features, z_threshold)
+    if return_info:
+        return outlier_counts
